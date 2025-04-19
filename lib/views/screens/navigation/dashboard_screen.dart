@@ -113,7 +113,6 @@ class DashboardScreen extends StatelessWidget {
 
                   20.height,
 
-
                   FutureBuilder(
                     future:
                         FirebaseServices()
@@ -136,7 +135,7 @@ class DashboardScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                  20.height,
+                            20.height,
 
                             TaskCard(taskModel: taskModel),
                           ],
