@@ -10,6 +10,7 @@ class AuthController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final Rx<User?> user = Rx<User?>(null);
   UserModel? userModel;
+  RxBool isLoading = false.obs;
 
   @override
   Future<void> onInit() async {
