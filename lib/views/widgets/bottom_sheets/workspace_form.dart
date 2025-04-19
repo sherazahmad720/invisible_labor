@@ -62,7 +62,7 @@ class _WorkspaceFormState extends State<WorkspaceForm> {
             if (ref != null) {
               DocumentSnapshot doc = await ref.get();
               if (doc.exists) {
-                _authController.selectedWorkSpace = WorkspaceModel.fromDoc(doc);
+                _authController.selectWorkSpace = WorkspaceModel.fromDoc(doc);
                 _authController.update();
               }
             }

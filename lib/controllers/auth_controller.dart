@@ -10,8 +10,15 @@ class AuthController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final Rx<User?> user = Rx<User?>(null);
   UserModel? userModel;
-  WorkspaceModel? selectedWorkSpace;
+  WorkspaceModel? _selectedWorkSpace;
+  get selectedWorkSpace => _selectedWorkSpace;
   RxBool isLoading = false.obs;
+
+  set selectWorkSpace(WorkspaceModel model) {
+    userModel?.ref?.update({'selectedWorkspace': model.ref});
+    _selectedWorkSpace = model;
+    update();
+  }
 
   authListener() async {
     user.value = _auth.currentUser;
@@ -75,7 +82,7 @@ class AuthController extends GetxController {
     // await FirebaseMessaging.instance.unsubscribeFromTopic(
     //   FirebaseAuth.instance.currentUser!.uid,
     // );
-    selectedWorkSpace = null;
+    _selectedWorkSpace = null;
     userModel = null;
     await _auth.signOut();
   }
@@ -85,7 +92,6 @@ class AuthController extends GetxController {
       isLoading.value = true;
       await _auth.sendPasswordResetEmail(email: email);
       Get.back();
-      
     } catch (e) {
       print('An unexpected error occurred. Please try again.');
     } finally {
@@ -120,7 +126,7 @@ class AuthController extends GetxController {
       if (userDataModel != null) {
         userModel = userDataModel;
         if (userModel?.selectedWorkspaceRef != null) {
-          selectedWorkSpace = await FirebaseServices.getWorkspace(
+          _selectedWorkSpace = await FirebaseServices.getWorkspace(
             userModel!.selectedWorkspaceRef!,
           );
         }
@@ -128,7 +134,7 @@ class AuthController extends GetxController {
         var result = await saveUserData(userId);
         userModel = result;
         WorkspaceModel workspaceModel = await saveDefaultWorkSpace(userId);
-        selectedWorkSpace = workspaceModel;
+        _selectedWorkSpace = workspaceModel;
         update();
       }
     } else {
