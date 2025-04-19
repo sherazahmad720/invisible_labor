@@ -11,13 +11,10 @@ class AuthController extends GetxController {
   final Rx<User?> user = Rx<User?>(null);
   UserModel? userModel;
 
-  @override
-  Future<void> onInit() async {
-    super.onInit();
+  authListener() async {
     user.value = _auth.currentUser;
 
     await Future.delayed(const Duration(milliseconds: 1500));
-
     _auth.authStateChanges().listen((User? firebaseUser) async {
       if (firebaseUser != null) {
         user.value = firebaseUser;
