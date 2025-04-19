@@ -30,7 +30,7 @@ class WorkspaceDetailedCard extends StatelessWidget {
                 child: Text(
                   workspaceModel.name ?? '',
                   style: context.textTheme.titleLarge?.copyWith(
-                    color: context.theme.primaryColor,
+                    color: context.theme.colorScheme.primary,
                   ),
                 ),
               ),

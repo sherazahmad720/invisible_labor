@@ -49,7 +49,9 @@ class WorkspaceDetailsScreen extends StatelessWidget {
                   onPressed: () {
                     AppHelper().showCustomBottomSheet(
                       context,
-                      UserSearchForm(workspaceModel: workspaceModel),
+                      UserSearchForm(
+                        selectedUser: workspaceModel.members ?? [],
+                      ),
                       'Add Member',
                       isMaxSize: true,
                     );

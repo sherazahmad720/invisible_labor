@@ -52,14 +52,14 @@ class UserCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: context.theme.primaryColor.withAlpha(25),
+        color: context.theme.colorScheme.primary.withAlpha(25),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: context.theme.primaryColor),
+        border: Border.all(color: context.theme.colorScheme.primary),
       ),
       child: Text(
         'Creator',
         style: TextStyle(
-          color: context.theme.primaryColor,
+          color: context.theme.colorScheme.primary,
           fontSize: 12,
           fontWeight: FontWeight.bold,
         ),
