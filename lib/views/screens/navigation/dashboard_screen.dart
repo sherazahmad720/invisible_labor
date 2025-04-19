@@ -36,20 +36,22 @@ class DashboardScreen extends StatelessWidget {
                           workspaceModel: controller.selectedWorkSpace!,
                         ),
                       ),
-                  PaginateFirestore(
-                    itemBuilder: (ctx, docs, index) {
-                      final TaskModel taskModel = TaskModel.fromDoc(
-                        docs[index],
-                      );
-                      return TaskCard(taskModel: taskModel);
-                    },
-                    shrinkWrap: true,
-                    query: FirebaseServices().myTasksQuery(
-                      controller.selectedWorkSpace?.ref?.id ?? '',
-                    ),
-                    isLive: true,
-                    itemBuilderType: PaginateBuilderType.listView,
-                  ),
+                  // FutureBuilder(
+                  //   builder: (ctx, snapshot) {
+                  //     final TaskModel taskModel = TaskModel.fromDoc(
+                  //       docs[index],
+                  //     );
+                  //     return TaskCard(taskModel: taskModel);
+                  //   },
+                  //   shrinkWrap: true,
+                  //   query: FirebaseServices()
+                  //       .myRecentTasksQuery(
+                  //         controller.selectedWorkSpace?.ref?.id ?? '',
+                  //       )
+                  //       .limit(1),
+                  //   isLive: true,
+                  //   itemBuilderType: PaginateBuilderType.listView,
+                  // ),
                 ],
               );
             },

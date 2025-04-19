@@ -75,4 +75,9 @@ class FirebaseServices {
   Query myTasksQuery(String workspaceId) {
     return tasksCollection.where('workspaceId', isEqualTo: workspaceId);
   }
+
+  Query myRecentTasksQuery(String workspaceId) {
+    return tasksCollection.where('workspaceId', isEqualTo: workspaceId);
+    // .orderBy('startTime');
+  }
 }
