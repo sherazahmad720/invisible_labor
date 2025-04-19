@@ -19,7 +19,7 @@ class EmptyWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding: EdgeInsets.all(24),
+            padding: EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: context.theme.primaryColor,
               shape: BoxShape.circle,

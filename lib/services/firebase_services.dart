@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:labor/models/user_model.dart';
 import 'package:labor/models/workspace_model.dart';
@@ -21,7 +22,7 @@ class FirebaseServices {
     return null;
   }
 
-  static Future<void> saveUser(UserModel user, String userId) async {
+  static Future<void> createUser(UserModel user, String userId) async {
     userCollection.doc(userId).set(user.toMap());
   }
 
@@ -33,14 +34,23 @@ class FirebaseServices {
     return null;
   }
 
-  static Future<void> saveWorkspace(
+  static Future<DocumentReference?> createWorkspace(
     WorkspaceModel workspaceModel, {
     String? workspaceId,
   }) async {
     if (workspaceId == null) {
-      await workspaceCollection.add(workspaceModel.toMap());
+      DocumentReference documentReference = await workspaceCollection.add(
+        workspaceModel.toMap(),
+      );
+      return documentReference;
     } else {
       await workspaceCollection.doc(workspaceId).set(workspaceModel.toMap());
+      return workspaceModel.ref;
     }
   }
+
+  static Query myWorkspacesQuery = workspaceCollection.where(
+    'members',
+    arrayContains: FirebaseAuth.instance.currentUser?.uid ?? '-',
+  );
 }

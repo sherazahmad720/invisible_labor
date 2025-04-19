@@ -75,6 +75,8 @@ class AuthController extends GetxController {
     // await FirebaseMessaging.instance.unsubscribeFromTopic(
     //   FirebaseAuth.instance.currentUser!.uid,
     // );
+    selectedWorkSpace = null;
+    userModel = null;
     await _auth.signOut();
   }
 
@@ -135,7 +137,7 @@ class AuthController extends GetxController {
       photoUrl: getPhotoUrl() ?? '',
       ref: FirebaseServices.userCollection.doc(userId),
     );
-    await FirebaseServices.saveUser(userModel, userId);
+    await FirebaseServices.createUser(userModel, userId);
     return userModel;
   }
 
@@ -146,7 +148,7 @@ class AuthController extends GetxController {
       createdBy: userId,
       ref: FirebaseServices.workspaceCollection.doc(userId),
     );
-    await FirebaseServices.saveWorkspace(workspaceModel, workspaceId: userId);
+    await FirebaseServices.createWorkspace(workspaceModel, workspaceId: userId);
     return workspaceModel;
   }
 }

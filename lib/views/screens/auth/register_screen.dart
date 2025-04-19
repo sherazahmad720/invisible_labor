@@ -44,13 +44,13 @@ class RegisterScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  30.verticalSpace,
+                  30.width,
                   // Image.asset(
                   //   AppImages.splash,
                   //   width: 120,
                   //   height: 120,
                   // ),
-                  24.verticalSpace,
+                  24.width,
                   Text(
                     'Sign Up',
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -59,7 +59,7 @@ class RegisterScreen extends StatelessWidget {
                     ),
                   ),
 
-                  32.verticalSpace,
+                  32.width,
                   CustomTextFormField(
                     controller: nameController,
                     validator: AppValidator.nameValidator.call,
@@ -69,7 +69,7 @@ class RegisterScreen extends StatelessWidget {
                     hintText: 'Enter your Full Name',
                     prefixIcon: Icons.person_2_outlined,
                   ),
-                  16.verticalSpace,
+                  16.width,
                   CustomTextFormField(
                     controller: emailController,
                     validator: AppValidator.emailValidator.call,
@@ -78,7 +78,7 @@ class RegisterScreen extends StatelessWidget {
                     hintText: 'Enter your email',
                     prefixIcon: Icons.email_outlined,
                   ),
-                  16.verticalSpace,
+                  16.width,
                   Obx(
                     () => CustomTextFormField(
                       controller: passwordController,
@@ -98,7 +98,7 @@ class RegisterScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  16.verticalSpace,
+                  16.width,
                   Obx(
                     () => CustomTextFormField(
                       controller: confirmPasswordController,
@@ -125,7 +125,7 @@ class RegisterScreen extends StatelessWidget {
                     ),
                   ),
 
-                  24.verticalSpace,
+                  24.width,
                   Obx(
                     () => CustomButton(
                       buttonText: 'Sign Up',
@@ -141,7 +141,7 @@ class RegisterScreen extends StatelessWidget {
                       isLoading: authController.isLoading.value,
                     ),
                   ),
-                  24.verticalSpace,
+                  24.width,
                   Row(
                     children: [
                       Expanded(child: Divider(color: Colors.grey[300])),
@@ -158,7 +158,7 @@ class RegisterScreen extends StatelessWidget {
                       Expanded(child: Divider(color: Colors.grey[300])),
                     ],
                   ),
-                  24.verticalSpace,
+                  24.width,
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -180,7 +180,7 @@ class RegisterScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  24.verticalSpace,
+                  24.width,
                 ],
               ),
             ),

@@ -38,13 +38,13 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  30.verticalSpace,
+                  30.width,
                   // Image.asset(
                   //   AppImages.splash,
                   //   width: 120,
                   //   height: 120,
                   // ),
-                  24.verticalSpace,
+                  24.width,
                   Text(
                     'Welcome Back! 👋',
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -52,14 +52,14 @@ class LoginScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  8.verticalSpace,
+                  8.width,
                   Text(
                     'Sign in to continue',
                     style: Theme.of(
                       context,
                     ).textTheme.bodyLarge?.copyWith(color: Colors.grey[600]),
                   ),
-                  32.verticalSpace,
+                  32.width,
                   CustomTextFormField(
                     controller: emailController,
                     // validator: AppValidators.emailValidator.call,
@@ -68,7 +68,7 @@ class LoginScreen extends StatelessWidget {
                     hintText: 'Enter your email',
                     prefixIcon: Icons.email_outlined,
                   ),
-                  16.verticalSpace,
+                  16.width,
                   Obx(
                     () => CustomTextFormField(
                       controller: passwordController,
@@ -88,7 +88,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  8.verticalSpace,
+                  8.width,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -104,7 +104,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  24.verticalSpace,
+                  24.width,
                   Obx(
                     () => CustomButton(
                       buttonText: 'Login',
@@ -119,7 +119,7 @@ class LoginScreen extends StatelessWidget {
                       isLoading: authController.isLoading.value,
                     ),
                   ),
-                  24.verticalSpace,
+                  24.width,
                   Row(
                     children: [
                       Expanded(child: Divider(color: Colors.grey[300])),
@@ -136,7 +136,7 @@ class LoginScreen extends StatelessWidget {
                       Expanded(child: Divider(color: Colors.grey[300])),
                     ],
                   ),
-                  24.verticalSpace,
+                  24.width,
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -158,7 +158,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  24.verticalSpace,
+                  24.width,
                 ],
               ),
             ),

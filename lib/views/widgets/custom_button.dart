@@ -77,7 +77,7 @@ class CustomButton extends StatelessWidget {
                                 Theme.of(context).colorScheme.primary
                             : AppColors.whiteColor,
                   ),
-                  10.5.horizontalSpace,
+                  10.5.height,
                 ],
                 Text(
                   buttonText,
