@@ -10,7 +10,8 @@ import 'package:labor/views/screens/navigation_screen.dart';
 class AuthController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final Rx<User?> user = Rx<User?>(null);
-  UserModel? userDataModel;
+  UserModel? userModel;
+  RxBool isLoading = false.obs;
 
   authListener() async {
     user.value = _auth.currentUser;
