@@ -95,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextButton(
-                        onPressed: () => Get.to(ForgetPasswordScreen()),
+                        onPressed: () => Get.to(() => ForgotPasswordScreen()),
                         child: Text(
                           'Forgot password?',
                           style: TextStyle(

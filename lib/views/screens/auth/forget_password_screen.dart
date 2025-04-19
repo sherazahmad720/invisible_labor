@@ -44,12 +44,12 @@ class ForgotPasswordScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  12.verticalSpace,
+                  12.height,
                   Text(
                     'Enter your email address to get an email for a password reset link.',
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
-                  32.verticalSpace,
+                  32.height,
                   // 32.verticalSpace,
                   CustomTextFormField(
                     controller: emailController,
@@ -59,7 +59,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                     hintText: 'Enter your email',
                     prefixIcon: Icons.email_outlined,
                   ),
-                  24.verticalSpace,
+                  24.height,
                   Obx(
                     () => CustomButton(
                       buttonText: 'Reset Password',
