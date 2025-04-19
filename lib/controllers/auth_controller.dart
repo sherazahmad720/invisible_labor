@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:labor/models/user_model.dart';
@@ -54,7 +55,7 @@ class AuthController extends GetxController {
     }
   }
 
-  signup(String email, String password, {required displayName}) async {
+  signup(String email, String password, {required String displayName}) async {
     try {
       this.displayName = displayName;
       await _auth.createUserWithEmailAndPassword(

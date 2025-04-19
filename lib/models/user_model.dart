@@ -1,5 +1,6 @@
 // User Information
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:labor/utils/app_helper.dart';
 
 class UserModel {
   final String? id;
@@ -50,6 +51,10 @@ class UserModel {
     return {
       'id': id,
       'displayName': displayName,
+      'searchIndex': [
+        ...AppHelper().getSearchIndex(displayName ?? ''),
+        ...AppHelper().getSearchIndex(email ?? ''),
+      ],
 
       'photoUrl': photoUrl,
       'email': email,

@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:labor/controllers/auth_controller.dart';
 import 'package:labor/models/workspace_model.dart';
 import 'package:labor/services/firebase_services.dart';
 import 'package:labor/utils/app_helper.dart';
@@ -40,7 +42,12 @@ class WorkSpacesList extends StatelessWidget {
             final WorkspaceModel workspaceModel = WorkspaceModel.fromDoc(
               docs[index],
             );
-            return WorkspaceDetailedCard(workspaceModel: workspaceModel);
+            return WorkspaceDetailedCard(
+              workspaceModel: workspaceModel,
+              onTap: () {
+                Get.find<AuthController>().selectWorkSpace = workspaceModel;
+              },
+            );
           },
           shrinkWrap: true,
           query: FirebaseServices.myWorkspacesQuery,

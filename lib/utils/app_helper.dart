@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:labor/utils/extentions.dart';
 
 class AppHelper {
+  List<String> getSearchIndex(String name) {
+    List<String> searchOptions = [];
+    String temp = "";
+    for (int i = 0; i < name.length; i++) {
+      temp = temp + name[i];
+      searchOptions.add(temp);
+    }
+    return searchOptions;
+  }
+
   showCustomBottomSheet(
     BuildContext context,
     Widget child,

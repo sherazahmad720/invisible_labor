@@ -134,7 +134,7 @@ class RegisterScreen extends StatelessWidget {
                           authController.signup(
                             emailController.text.trim(),
                             passwordController.text,
-                            displayName: nameController,
+                            displayName: nameController.text,
                           );
                         }
                       },
