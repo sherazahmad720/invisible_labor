@@ -24,7 +24,10 @@ class UserCard extends StatelessWidget {
               (userModel.photoUrl ?? '') == ''
                   ? Center(
                     child: Text(
-                      (userModel.displayName ?? '').substring(0, 1),
+                      ((userModel.displayName ?? '').isEmpty
+                              ? 'U'
+                              : userModel.displayName ?? '')
+                          .substring(0, 1),
                       style: context.textTheme.headlineLarge?.copyWith(
                         color: context.theme.colorScheme.onPrimary,
                       ),

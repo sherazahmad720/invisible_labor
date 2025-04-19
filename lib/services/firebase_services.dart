@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:labor/models/task_model.dart';
 
 import 'package:labor/models/user_model.dart';
@@ -55,7 +56,9 @@ class FirebaseServices {
     arrayContains: FirebaseAuth.instance.currentUser?.uid ?? '-',
   );
   static Query searchUser(String searchQuery) =>
-      userCollection.where('searchIndex', arrayContains: searchQuery);
+      searchQuery.trim().isEmpty
+          ? userCollection
+          : userCollection.where('searchIndex', arrayContains: searchQuery);
 
   static Future<DocumentReference?> createTask(
     TaskModel taskModel, {
