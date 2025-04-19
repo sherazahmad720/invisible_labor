@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:labor/utils/app_colors.dart';
 import 'package:labor/utils/enum/button_type.dart';
 import 'package:labor/utils/extentions.dart';
 
@@ -75,7 +74,8 @@ class CustomButton extends StatelessWidget {
                             : buttonType == ButtonType.opacity
                             ? buttonColor ??
                                 Theme.of(context).colorScheme.primary
-                            : AppColors.whiteColor,
+                                
+                            : Theme.of(context).colorScheme.onPrimary,
                   ),
                   10.5.horizontalSpace,
                 ],
@@ -89,7 +89,7 @@ class CustomButton extends StatelessWidget {
                             : buttonType == ButtonType.opacity
                             ? buttonColor ??
                                 Theme.of(context).colorScheme.primary
-                            : AppColors.whiteColor,
+                            : Theme.of(context).colorScheme.onPrimary,
                     fontSize: fontSize,
                   ),
                 ),

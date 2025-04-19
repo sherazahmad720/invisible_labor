@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:labor/controllers/auth_controller.dart';
-import 'package:labor/utils/app_colors.dart';
 import 'package:labor/utils/extentions.dart';
 import 'package:labor/views/screens/auth/forget_password_screen.dart';
 import 'package:labor/views/screens/auth/register_screen.dart';
@@ -23,7 +22,10 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: AppColors.blackColor),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
           onPressed: () => Get.back(),
         ),
         elevation: 0,
@@ -89,20 +91,18 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   8.verticalSpace,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(
-                        onPressed: () => Get.to(ForgetPasswordScreen()),
-                        child: Text(
-                          'Forgot password?',
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontSize: 14,
-                          ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () => Get.to(ForgotPasswordScreen()),
+                      child: Text(
+                        'Forgot password?',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontSize: 14,
                         ),
                       ),
-                    ],
+                    ),
                   ),
                   24.verticalSpace,
                   Obx(
