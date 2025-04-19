@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "69689474486",
+    "project_id": "invisible-labor-ba95f",
+    "storage_bucket": "invisible-labor-ba95f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:69689474486:android:d12ff2e5d8d56a1d17d517",
+        "android_client_info": {
+          "package_name": "com.invisible.labor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "69689474486-n8d3hlk7rjdbhevrk6c451t2ngsmbfcj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzfoCBENI_qQfyQ7FKz0iztX_kdYzfygU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "69689474486-n8d3hlk7rjdbhevrk6c451t2ngsmbfcj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
