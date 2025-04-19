@@ -12,6 +12,7 @@ class AuthController extends GetxController {
   UserModel? userModel;
   WorkspaceModel? selectedWorkSpace;
   RxBool isLoading = false.obs;
+  String? displayName;
 
   authListener() async {
     user.value = _auth.currentUser;
@@ -48,17 +49,11 @@ class AuthController extends GetxController {
 
   signup(String email, String password, {required displayName}) async {
     try {
-      UserCredential? result = await _auth.createUserWithEmailAndPassword(
+      this.displayName = displayName;
+      await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-
-      if (result.user != null) {
-        userModel = await saveUserData(
-          result.user!.uid,
-          displayName: displayName,
-        );
-      }
       // await FirebaseMessaging.instance.subscribeToTopic(
       //   FirebaseAuth.instance.currentUser!.uid,
       // );
@@ -83,7 +78,6 @@ class AuthController extends GetxController {
       isLoading.value = true;
       await _auth.sendPasswordResetEmail(email: email);
       Get.back();
-      
     } catch (e) {
       print('An unexpected error occurred. Please try again.');
     } finally {
@@ -111,7 +105,7 @@ class AuthController extends GetxController {
     return _auth.currentUser?.photoURL;
   }
 
-  Future<UserModel?> fetchUserModel() async {
+  Future<UserModel?> fetchUserModel({String? displayName}) async {
     String? userId = getUserId();
     if (userId != null) {
       UserModel? userDataModel = await FirebaseServices.getUser(userId);
@@ -136,7 +130,7 @@ class AuthController extends GetxController {
     return null;
   }
 
-  Future<UserModel> saveUserData(String userId, {String? displayName}) async {
+  Future<UserModel> saveUserData(String userId) async {
     UserModel userModel = UserModel(
       id: userId,
       email: getUserEmail(),

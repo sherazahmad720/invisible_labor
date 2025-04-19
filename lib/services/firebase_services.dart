@@ -43,4 +43,5 @@ class FirebaseServices {
       await workspaceCollection.doc(workspaceId).set(workspaceModel.toMap());
     }
   }
+
 }
