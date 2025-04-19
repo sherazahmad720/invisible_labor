@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:get/get.dart';
 import 'package:labor/models/user_model.dart';
+import 'package:labor/models/workspace_model.dart';
 import 'package:labor/services/firebase_services.dart';
 import 'package:labor/views/screens/auth/login_screen.dart';
 import 'package:labor/views/screens/navigation_screen.dart';
@@ -11,6 +12,7 @@ class AuthController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final Rx<User?> user = Rx<User?>(null);
   UserModel? userModel;
+  WorkspaceModel? selectedWorkSpace;
   RxBool isLoading = false.obs;
 
   authListener() async {
@@ -74,18 +76,24 @@ class AuthController extends GetxController {
   Future<UserModel?> fetchUserModel() async {
     String? userId = getUserId();
     if (userId != null) {
-      UserModel? userModel = await FirebaseServices.getUser(userId);
-      if (userModel == null) {
-        UserModel userModelTemp = UserModel(
-          id: userId,
-          email: getUserEmail(),
-          displayName: getDisplayName(),
-        );
+      UserModel? userDataModel = await FirebaseServices.getUser(userId);
+      if (userDataModel != null) {
+        userModel = userDataModel;
+        if (userModel?.selectedWorkspaceRef != null) {
+          selectedWorkSpace = await FirebaseServices.getWorkspace(
+            userModel!.selectedWorkspaceRef!,
+          );
+        }
       } else {
-        ;
+        var result = await saveUserData(userId);
+        userModel = result;
+        WorkspaceModel workspaceModel = await saveDefaultWorkSpace(userId);
+        selectedWorkSpace = workspaceModel;
+        update();
       }
     } else {
       logout();
+      return null;
     }
     return null;
   }
@@ -106,5 +114,14 @@ class AuthController extends GetxController {
     return userModel;
   }
 
-  Future<void> saveDefaultWorkSpace() async {}
+  Future<WorkspaceModel> saveDefaultWorkSpace(String userId) async {
+    WorkspaceModel workspaceModel = WorkspaceModel(
+      name: "${getDisplayName()} 's Workspace",
+      members: [userId],
+      createdBy: userId,
+      ref: FirebaseServices.workspaceCollection.doc(userId),
+    );
+    await FirebaseServices.saveWorkspace(workspaceModel, workspaceId: userId);
+    return workspaceModel;
+  }
 }

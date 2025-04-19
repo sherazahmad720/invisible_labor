@@ -33,11 +33,16 @@ class UserModel {
       displayName: data['displayName'],
       photoUrl: data['photoUrl'],
       email: data['email'],
-      friendsList: data['friendsList'],
-      creationDate: data['creationDate'].toDate(),
-      groupLists: data['groupLists'],
+      friendsList: List<String>.from(doc['friendsList']),
+      creationDate:
+          doc['creationDate'] != null
+              ? (doc['creationDate'] as Timestamp).toDate()
+              : null,
+      groupLists: List<String>.from(doc['groupLists']),
       selectedWorkspaceRef: data['selectedWorkspaceRef'],
-      workspaces: data['workspaces'],
+      workspaces: List<String>.from(doc['workspaces']),
+
+      ref: doc.reference,
     );
   }
 
