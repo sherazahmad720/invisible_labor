@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:labor/controllers/auth_controller.dart';
 import 'package:labor/models/task_model.dart';
 import 'package:labor/models/workspace_model.dart';
@@ -20,12 +21,13 @@ class TaskForm extends StatefulWidget {
 
 class _TaskFormState extends State<TaskForm> {
   TextEditingController titleController = TextEditingController();
-  TextEditingController durationController = TextEditingController();
+
   AuthController _authController = Get.find<AuthController>();
   GlobalKey<FormState> formKey = GlobalKey();
   bool isLoading = false;
 
-  DateTimeRange? dateTimeRange;
+  DateTime? startDateTime;
+  DateTime? endDateTime;
 
   @override
   Widget build(BuildContext context) {
@@ -47,45 +49,92 @@ class _TaskFormState extends State<TaskForm> {
                 labelText: 'Title',
                 hintText: 'Write you task title here...',
               ),
-              20.height,
-              CustomTextFormField(
-                controller: durationController,
-                keyboardType: TextInputType.number,
-                validator: (val) {
-                  if ((val?.trim() ?? '').isEmpty) {
-                    return 'Duration is required';
-                  }
-                  return null;
-                },
-                labelText: 'Duration In Minutes',
-                hintText: 'Write you duration in minutes here...',
-              ),
 
               20.height,
-              CustomButton(
-                buttonText: 'Select Duration',
-                buttonType: ButtonType.bordered,
-                onPressed: () async {
-                  DateTime? start = await showDatePicker(
-                    context: context,
-                    firstDate: DateTime.now().subtract(Duration(days: 365)),
-                    lastDate: DateTime.now().add(Duration(days: 365 * 3)),
-                    initialDate: DateTime.now(),
-                  );
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomButton(
+                      buttonText:
+                          startDateTime != null
+                              ? DateFormat(
+                                'yyyy-MM-dd – kk:mm',
+                              ).format(startDateTime!)
+                              : 'Start Time',
+                      buttonType: ButtonType.bordered,
+                      onPressed: () async {
+                        DateTime? start = await showDatePicker(
+                          context: context,
+                          firstDate: DateTime.now().subtract(
+                            Duration(days: 365),
+                          ),
+                          lastDate: DateTime.now().add(Duration(days: 365 * 3)),
+                          initialDate: DateTime.now(),
+                        );
 
-                  if (start != null) {
-                    TimeOfDay? startTime = await showTimePicker(
-                      context: context,
-                      initialTime: TimeOfDay.now(),
-                    );
+                        if (start != null) {
+                          TimeOfDay? startTime = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                          );
 
-                    if (startTime != null) {
-                      setState(() {
-                        // dateTimeRange =  DateTimeRange(start: start, end: end)
-                      });
-                    }
-                  }
-                },
+                          if (startTime != null) {
+                            setState(() {
+                              startDateTime = DateTime(
+                                start.year,
+                                start.month,
+                                start.day,
+                                startTime.hour,
+                                startTime.minute,
+                              );
+                            });
+                          }
+                        }
+                      },
+                    ),
+                  ),
+                  10.width,
+                  Expanded(
+                    child: CustomButton(
+                      buttonText:
+                          endDateTime != null
+                              ? DateFormat(
+                                'yyyy-MM-dd – kk:mm',
+                              ).format(endDateTime!)
+                              : 'End Time',
+                      buttonType: ButtonType.bordered,
+                      onPressed: () async {
+                        DateTime? end = await showDatePicker(
+                          context: context,
+                          firstDate: DateTime.now().subtract(
+                            Duration(days: 365),
+                          ),
+                          lastDate: DateTime.now().add(Duration(days: 365 * 3)),
+                          initialDate: DateTime.now(),
+                        );
+
+                        if (end != null) {
+                          TimeOfDay? endTime = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                          );
+
+                          if (endTime != null) {
+                            setState(() {
+                              endDateTime = DateTime(
+                                end.year,
+                                end.month,
+                                end.day,
+                                endTime.hour,
+                                endTime.minute,
+                              );
+                            });
+                          }
+                        }
+                      },
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -103,22 +152,21 @@ class _TaskFormState extends State<TaskForm> {
             });
             TaskModel taskModel = TaskModel(
               title: titleController.text,
-              durationInMinutes: int.tryParse(durationController.text),
+              durationInMinutes:
+                  DateTimeRange(
+                    start: startDateTime!,
+                    end: endDateTime!,
+                  ).duration.inMinutes,
               workspaceId: _authController.selectedWorkSpace?.ref?.id,
               doneBy: _authController.userModel?.ref?.id,
+              startTime: startDateTime,
+              endTime: endDateTime,
               isPublic: false,
             );
 
             DocumentReference? ref = await FirebaseServices.createTask(
               taskModel,
             );
-            // if (ref != null) {
-            //   DocumentSnapshot doc = await ref.get();
-            //   if (doc.exists) {
-            //     _authController.selectWorkSpace = TaskModel.fromDoc(doc);
-            //     _authController.update();
-            //   }
-            // }
 
             setState(() {
               isLoading = false;
