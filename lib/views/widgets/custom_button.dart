@@ -12,7 +12,8 @@ class CustomButton extends StatelessWidget {
     this.buttonColor,
     this.buttonHeight,
     this.fontSize,
-    this.leadingImage,
+    this.leadingIcon,
+    this.trailingIcon,
   });
 
   final String buttonText;
@@ -22,7 +23,8 @@ class CustomButton extends StatelessWidget {
   final Color? buttonColor;
   final double? buttonHeight;
   final double? fontSize;
-  final String? leadingImage;
+  final IconData? leadingIcon;
+  final IconData? trailingIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class CustomButton extends StatelessWidget {
       onTap: isLoading ? null : onPressed,
       child: Container(
         height: buttonHeight ?? 58,
-
+        padding: EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
           border:
               buttonType == ButtonType.bordered
@@ -62,11 +64,10 @@ class CustomButton extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (leadingImage != null) ...[
-                  Image.asset(
-                    leadingImage!,
-                    height: 15,
-                    width: 15,
+                if (leadingIcon != null) ...[
+                  Icon(
+                    leadingIcon!,
+                    size: 15,
                     color:
                         buttonType == ButtonType.bordered
                             ? buttonColor ??
@@ -74,7 +75,6 @@ class CustomButton extends StatelessWidget {
                             : buttonType == ButtonType.opacity
                             ? buttonColor ??
                                 Theme.of(context).colorScheme.primary
-                                
                             : Theme.of(context).colorScheme.onPrimary,
                   ),
                   10.5.height,
@@ -93,6 +93,21 @@ class CustomButton extends StatelessWidget {
                     fontSize: fontSize,
                   ),
                 ),
+                if (trailingIcon != null) ...[
+                  10.5.horizontalSpace,
+                  Icon(
+                    trailingIcon!,
+                    size: 15,
+                    color:
+                        buttonType == ButtonType.bordered
+                            ? buttonColor ??
+                                Theme.of(context).colorScheme.primary
+                            : buttonType == ButtonType.opacity
+                            ? buttonColor ??
+                                Theme.of(context).colorScheme.primary
+                            : Theme.of(context).colorScheme.onPrimary,
+                  ),
+                ],
               ],
             ),
           ],

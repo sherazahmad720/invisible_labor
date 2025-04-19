@@ -43,6 +43,7 @@ dependencies:
   shimmer: ^3.0.0
   form_field_validator: ^1.1.0
   paginate_firestore_plus: ^1.0.2+3
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:
