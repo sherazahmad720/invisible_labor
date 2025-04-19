@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:get/get.dart';
 import 'package:labor/models/user_model.dart';
 import 'package:labor/models/workspace_model.dart';
@@ -23,8 +21,9 @@ class AuthController extends GetxController {
       if (firebaseUser != null) {
         user.value = firebaseUser;
         await fetchUserModel();
-
+        isLoading.value = false;
         Get.offAll(() => NavigationScreen());
+        // logout();
       } else {
         Get.offAll(() => LoginScreen());
       }
@@ -33,6 +32,7 @@ class AuthController extends GetxController {
 
   Future<String?> login(String email, String password) async {
     try {
+      isLoading.value = true;
       await _auth.signInWithEmailAndPassword(email: email, password: password);
 
       // await FirebaseMessaging.instance.subscribeToTopic(
@@ -78,6 +78,19 @@ class AuthController extends GetxController {
     selectedWorkSpace = null;
     userModel = null;
     await _auth.signOut();
+  }
+
+  Future<void> forgotPassword(String email) async {
+    try {
+      isLoading.value = true;
+      await _auth.sendPasswordResetEmail(email: email);
+      Get.back();
+      
+    } catch (e) {
+      print('An unexpected error occurred. Please try again.');
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   bool isLoggedIn() {
