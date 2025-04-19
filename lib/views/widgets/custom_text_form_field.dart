@@ -46,20 +46,21 @@ class CustomTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,
-        prefixIcon: prefixIcon != null
-            ? Icon(prefixIcon, color: AppColors.primaryColor)
-            : null,
+        labelStyle: Theme.of(context).textTheme.bodyMedium,
+        hintStyle: Theme.of(context).textTheme.bodyMedium,
+        prefixIcon:
+            prefixIcon != null
+                ? Icon(prefixIcon, color: Theme.of(context).colorScheme.primary)
+                : null,
         suffixIcon: suffixIcon,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: Colors.grey[300]!),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppColors.primaryColor),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
         ),
       ),
     );

@@ -23,10 +23,7 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: AppColors.blackColor,
-          ),
+          icon: Icon(Icons.arrow_back, color: AppColors.blackColor),
           onPressed: () => Get.back(),
         ),
         elevation: 0,
@@ -51,7 +48,7 @@ class LoginScreen extends StatelessWidget {
                   Text(
                     'Welcome Back! 👋',
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: AppColors.primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -85,7 +82,7 @@ class LoginScreen extends StatelessWidget {
                           isPasswordVisible.value
                               ? Icons.visibility
                               : Icons.visibility_off,
-                          color: AppColors.primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                         onPressed: () => isPasswordVisible.toggle(),
                       ),
@@ -100,7 +97,7 @@ class LoginScreen extends StatelessWidget {
                         child: Text(
                           'Forgot password?',
                           style: TextStyle(
-                            color: AppColors.primaryColor,
+                            color: Theme.of(context).colorScheme.primary,
                             fontSize: 14,
                           ),
                         ),
@@ -153,7 +150,7 @@ class LoginScreen extends StatelessWidget {
                         child: Text(
                           'Create an Account',
                           style: TextStyle(
-                            color: AppColors.primaryColor,
+                            color: Theme.of(context).colorScheme.primary,
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),

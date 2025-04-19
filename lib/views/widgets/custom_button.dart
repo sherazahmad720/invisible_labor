@@ -9,9 +9,8 @@ class CustomButton extends StatelessWidget {
     required this.buttonText,
     this.onPressed,
     this.buttonType = ButtonType.filled,
-    // this.isOpacityButton = false,
     this.isLoading = false,
-    this.buttonColor = AppColors.primaryColor,
+    this.buttonColor,
     this.buttonHeight,
     this.fontSize,
     this.leadingImage,
@@ -20,9 +19,8 @@ class CustomButton extends StatelessWidget {
   final String buttonText;
   final void Function()? onPressed;
   final ButtonType buttonType;
-  // final bool isOpacityButton;
   final bool isLoading;
-  final Color buttonColor;
+  final Color? buttonColor;
   final double? buttonHeight;
   final double? fontSize;
   final String? leadingImage;
@@ -32,19 +30,23 @@ class CustomButton extends StatelessWidget {
     return GestureDetector(
       onTap: isLoading ? null : onPressed,
       child: Container(
-        // padding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 16.w),
         height: buttonHeight ?? 58,
 
         decoration: BoxDecoration(
-          border: buttonType == ButtonType.bordered
-              ? Border.all(color: buttonColor)
-              : null,
+          border:
+              buttonType == ButtonType.bordered
+                  ? Border.all(
+                    color: buttonColor ?? Theme.of(context).colorScheme.primary,
+                  )
+                  : null,
           borderRadius: BorderRadius.circular(100),
-          color: buttonType == ButtonType.bordered
-              ? null
-              : buttonType == ButtonType.opacity
-                  ? buttonColor.withOpacity(0.1)
-                  : buttonColor,
+          color:
+              buttonType == ButtonType.bordered
+                  ? null
+                  : buttonType == ButtonType.opacity
+                  ? (buttonColor ?? Theme.of(context).colorScheme.primary)
+                      .withOpacity(0.1)
+                  : (buttonColor ?? Theme.of(context).colorScheme.primary),
         ),
         child: Stack(
           alignment: Alignment.center,
@@ -66,10 +68,13 @@ class CustomButton extends StatelessWidget {
                     leadingImage!,
                     height: 15,
                     width: 15,
-                    color: buttonType == ButtonType.bordered
-                        ? buttonColor
-                        : buttonType == ButtonType.opacity
-                            ? buttonColor
+                    color:
+                        buttonType == ButtonType.bordered
+                            ? buttonColor ??
+                                Theme.of(context).colorScheme.primary
+                            : buttonType == ButtonType.opacity
+                            ? buttonColor ??
+                                Theme.of(context).colorScheme.primary
                             : AppColors.whiteColor,
                   ),
                   10.5.horizontalSpace,
@@ -77,12 +82,16 @@ class CustomButton extends StatelessWidget {
                 Text(
                   buttonText,
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      color: buttonType == ButtonType.bordered
-                          ? buttonColor
-                          : buttonType == ButtonType.opacity
-                              ? buttonColor
-                              : AppColors.whiteColor,
-                      fontSize: fontSize),
+                    color:
+                        buttonType == ButtonType.bordered
+                            ? buttonColor ??
+                                Theme.of(context).colorScheme.primary
+                            : buttonType == ButtonType.opacity
+                            ? buttonColor ??
+                                Theme.of(context).colorScheme.primary
+                            : AppColors.whiteColor,
+                    fontSize: fontSize,
+                  ),
                 ),
               ],
             ),

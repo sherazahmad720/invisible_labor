@@ -44,6 +44,31 @@ class AuthController extends GetxController {
     }
   }
 
+  signup(String email, String password, {required displayName}) async {
+    try {
+      UserCredential? result = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      if (result.user != null) {
+        userModel = await saveUserData(
+          result.user!.uid,
+          displayName: displayName,
+        );
+      }
+      // await FirebaseMessaging.instance.subscribeToTopic(
+      //   FirebaseAuth.instance.currentUser!.uid,
+      // );
+
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return e.message;
+    } catch (e) {
+      return 'An unexpected error occurred. Please try again.';
+    }
+  }
+
   Future<void> logout() async {
     // await FirebaseMessaging.instance.unsubscribeFromTopic(
     //   FirebaseAuth.instance.currentUser!.uid,
@@ -79,7 +104,7 @@ class AuthController extends GetxController {
         UserModel userModelTemp = UserModel(
           id: userId,
           email: getUserEmail(),
-          displayName: getDisplayName(),
+          displayName: getDisplayName() ?? userModel?.displayName,
         );
       } else {
         ;
@@ -90,11 +115,11 @@ class AuthController extends GetxController {
     return null;
   }
 
-  Future<UserModel> saveUserData(String userId) async {
+  Future<UserModel> saveUserData(String userId, {String? displayName}) async {
     UserModel userModel = UserModel(
       id: userId,
       email: getUserEmail(),
-      displayName: getDisplayName(),
+      displayName: getDisplayName() ?? displayName,
       friendsList: [],
       workspaces: [userId],
       selectedWorkspaceRef: FirebaseServices.workspaceCollection.doc(userId),
