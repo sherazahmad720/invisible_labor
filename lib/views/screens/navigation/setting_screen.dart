@@ -7,6 +7,7 @@ import 'package:labor/services/firebase_services.dart';
 import 'package:labor/utils/app_helper.dart';
 import 'package:labor/utils/enum/button_type.dart';
 import 'package:labor/utils/extentions.dart';
+import 'package:labor/views/screens/edit_profile_screen.dart';
 import 'package:labor/views/screens/workspace/workspace_details_screen.dart';
 import 'package:labor/views/widgets/bottom_sheets/workspace_form.dart';
 import 'package:labor/views/widgets/cards/workspace_detailed_card.dart';
@@ -91,6 +92,7 @@ class SettingScreen extends StatelessWidget {
                         trailingIcon: Icons.edit,
                         buttonHeight: 45,
                         fontSize: 16,
+                        onPressed: () => Get.to(EditProfileScreen()),
                       ),
                     ],
                   ),

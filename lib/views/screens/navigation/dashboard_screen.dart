@@ -47,25 +47,35 @@ class DashboardScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text(
-                    'Recent Tasks',
-                    style: context.textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  PaginateFirestore(
-                    itemBuilder: (ctx, docs, index) {
-                      final TaskModel taskModel = TaskModel.fromDoc(
-                        docs[index],
-                      );
-                      return TaskCard(taskModel: taskModel);
+
+                  FutureBuilder(
+                    future:
+                        FirebaseServices()
+                            .myRecentTasksQuery(
+                              controller.selectedWorkSpace?.ref?.id ?? '',
+                            )
+                            .limit(1)
+                            .get(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        final TaskModel taskModel = TaskModel.fromDoc(
+                          snapshot.data!.docs[0],
+                        );
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Recent Task',
+                              style: context.textTheme.titleLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            TaskCard(taskModel: taskModel),
+                          ],
+                        );
+                      }
+                      return SizedBox.shrink();
                     },
-                    shrinkWrap: true,
-                    query: FirebaseServices().myTasksQuery(
-                      controller.selectedWorkSpace?.ref?.id ?? '',
-                    ),
-                    isLive: true,
-                    itemBuilderType: PaginateBuilderType.listView,
                   ),
                 ],
               );

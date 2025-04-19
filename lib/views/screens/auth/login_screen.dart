@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:labor/controllers/auth_controller.dart';
-import 'package:labor/utils/extentions.dart'; 
+import 'package:labor/utils/extentions.dart';
 import 'package:labor/views/screens/auth/forget_password_screen.dart';
 import 'package:labor/views/screens/auth/register_screen.dart';
 import 'package:labor/views/widgets/custom_button.dart';
@@ -19,17 +19,6 @@ class LoginScreen extends StatelessWidget {
     final RxBool isPasswordVisible = false.obs;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Theme.of(context).colorScheme.onSurface,
-          ),
-          onPressed: () => Get.back(),
-        ),
-        elevation: 0,
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const ClampingScrollPhysics(),
