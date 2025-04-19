@@ -94,7 +94,7 @@ class CustomButton extends StatelessWidget {
                   ),
                 ),
                 if (trailingIcon != null) ...[
-                  10.5.horizontalSpace,
+                  10.5.width,
                   Icon(
                     trailingIcon!,
                     size: 15,

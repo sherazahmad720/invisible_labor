@@ -6,10 +6,14 @@ import 'package:get/get_utils/get_utils.dart';
 import 'package:labor/controllers/auth_controller.dart';
 import 'package:labor/models/workspace_model.dart';
 import 'package:labor/services/firebase_services.dart';
+import 'package:labor/utils/app_helper.dart';
 import 'package:labor/utils/enum/button_type.dart';
 import 'package:labor/utils/extentions.dart';
+import 'package:labor/views/widgets/bottom_sheets/workspace_form.dart';
+import 'package:labor/views/widgets/cards/workspace_card.dart';
+import 'package:labor/views/widgets/cards/workspace_detailed_card.dart';
 import 'package:labor/views/widgets/custom_button.dart';
-import 'package:labor/views/widgets/workspace_card.dart';
+import 'package:paginate_firestore_plus/paginate_firestore.dart';
 
 class SettingScreen extends StatelessWidget {
   SettingScreen({super.key});
@@ -53,98 +57,111 @@ class SettingScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 12),
-        child: SingleChildScrollView(
-          child: GetBuilder(
-            init: authController,
-            builder:
-                (authController) => Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    20.height,
-                    Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundColor: context.theme.colorScheme.primary,
-                          backgroundImage:
-                              authController.userModel?.photoUrl != null
-                                  ? CachedNetworkImageProvider(
-                                    authController.userModel!.photoUrl!,
-                                  )
-                                  : null,
-                          child:
-                              authController.userModel?.photoUrl == null
-                                  ? Icon(
-                                    Icons.person_2,
-                                    size: 50,
-                                    color: context.theme.colorScheme.onPrimary,
-                                  )
-                                  : null,
+        child: GetBuilder(
+          init: authController,
+          builder:
+              (authController) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  20.height,
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundColor: context.theme.colorScheme.primary,
+                        backgroundImage:
+                            authController.userModel?.photoUrl != null
+                                ? CachedNetworkImageProvider(
+                                  authController.userModel!.photoUrl!,
+                                )
+                                : null,
+                        child:
+                            authController.userModel?.photoUrl == null
+                                ? Icon(
+                                  Icons.person_2,
+                                  size: 50,
+                                  color: context.theme.colorScheme.onPrimary,
+                                )
+                                : null,
+                      ),
+                      20.width,
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(authController.userModel?.displayName ?? ''),
+                            Text(authController.userModel?.email ?? ''),
+                          ],
                         ),
-                        20.width,
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                      ),
+                      CustomButton(
+                        buttonText: 'Edit',
+                        buttonType: ButtonType.bordered,
+                        trailingIcon: Icons.edit,
+                        buttonHeight: 45,
+                        fontSize: 16,
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          24.height,
+                          Row(
                             children: [
-                              Text(authController.userModel?.displayName ?? ''),
-                              Text(authController.userModel?.email ?? ''),
+                              Expanded(
+                                child: Text(
+                                  'Workspace',
+                                  style: context.textTheme.titleLarge,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  AppHelper().showCustomBottomSheet(
+                                    context,
+                                    WorkspaceForm(),
+                                    'Create Workspace',
+                                    isMaxSize: true,
+                                  );
+                                },
+                                label: Text('Create new workspace'),
+                                icon: Icon(Icons.add),
+                              ),
                             ],
                           ),
-                        ),
-                        CustomButton(
-                          buttonText: 'Edit',
-                          buttonType: ButtonType.bordered,
-                          trailingIcon: Icons.edit,
-                          buttonHeight: 45,
-                          fontSize: 16,
-                        ),
-                      ],
-                    ),
-                    24.height,
-                    Text('Workspace'),
-                    10.height,
-                    StreamBuilder(
-                      stream:
-                          FirebaseServices.workspaceCollection
-                              .where(
-                                'members',
-                                arrayContains: authController.userModel?.id,
-                              )
-                              .snapshots(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting)
-                          return CircularProgressIndicator();
-                        if (snapshot.hasData) {
-                          return ListView.builder(
-                            itemCount: snapshot.data?.docs.length,
-                            primary: true,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
+                          10.height,
+                          PaginateFirestore(
+                            itemBuilder: (ctx, docs, index) {
                               final WorkspaceModel workspaceModel =
-                                  WorkspaceModel.fromDoc(
-                                    snapshot.data!.docs[index],
-                                  );
-                              return WorkspaceCard(
+                                  WorkspaceModel.fromDoc(docs[index]);
+                              return WorkspaceDetailedCard(
                                 workspaceModel: workspaceModel,
                               );
                             },
-                          );
-                        }
-                        return SizedBox();
-                      },
+                            shrinkWrap: true,
+                            query: FirebaseServices.myWorkspacesQuery,
+                            isLive: true,
+                            itemBuilderType: PaginateBuilderType.listView,
+                          ),
+                        ],
+                      ),
                     ),
-                    24.height,
-                    CustomButton(
-                      buttonText: 'Logout',
-                      onPressed: () => authController.logout(),
-                      buttonType: ButtonType.opacity,
-                      leadingIcon: Icons.logout,
-                    ),
-                  ],
-                ),
-          ),
+                  ),
+                  24.height,
+                  CustomButton(
+                    buttonText: 'Logout',
+                    buttonColor: context.theme.colorScheme.error,
+                    onPressed: () => authController.logout(),
+                    buttonType: ButtonType.opacity,
+                    leadingIcon: Icons.logout,
+                  ),
+                  12.height,
+                ],
+              ),
         ),
       ),
     );

@@ -61,6 +61,7 @@ class AuthController extends GetxController {
         email: email,
         password: password,
       );
+      FirebaseAuth.instance.currentUser?.updateDisplayName(displayName);
       // await FirebaseMessaging.instance.subscribeToTopic(
       //   FirebaseAuth.instance.currentUser!.uid,
       // );

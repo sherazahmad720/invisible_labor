@@ -18,7 +18,6 @@ class AppHelper {
       ),
       isScrollControlled: true,
       context: context,
-
       builder: (ctx) {
         return Container(
           padding: EdgeInsets.only(
