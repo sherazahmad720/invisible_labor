@@ -27,7 +27,7 @@ class AuthController extends GetxController {
   authListener() async {
     user.value = _auth.currentUser;
 
-    await Future.delayed(const Duration(milliseconds: 1500));
+    await Future.delayed(const Duration(milliseconds: 500));
     _auth.authStateChanges().listen((User? firebaseUser) async {
       if (firebaseUser != null) {
         user.value = firebaseUser;

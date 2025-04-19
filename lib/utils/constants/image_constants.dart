@@ -1,3 +1,3 @@
 class ImageConstants {
-  static const logo = '';
+  static const logo = 'assets/logo.png';
 }
