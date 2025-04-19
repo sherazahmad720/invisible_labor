@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:labor/models/task_model.dart';
 
 import 'package:labor/models/user_model.dart';
 import 'package:labor/models/workspace_model.dart';
@@ -53,4 +54,23 @@ class FirebaseServices {
     'members',
     arrayContains: FirebaseAuth.instance.currentUser?.uid ?? '-',
   );
+
+  static Future<DocumentReference?> createTask(
+    TaskModel taskModel, {
+    String? taskId,
+  }) async {
+    if (taskId == null) {
+      DocumentReference documentReference = await tasksCollection.add(
+        taskModel.toMap(),
+      );
+      return documentReference;
+    } else {
+      await tasksCollection.doc(taskId).set(taskModel.toMap());
+      return taskModel.ref;
+    }
+  }
+
+  Query myTasksQuery(String workspaceId) {
+    return tasksCollection.where('workspaceId', isEqualTo: workspaceId);
+  }
 }

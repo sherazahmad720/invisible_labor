@@ -8,11 +8,8 @@ import 'package:labor/utils/app_helper.dart';
 import 'package:labor/utils/enum/button_type.dart';
 import 'package:labor/utils/extentions.dart';
 import 'package:labor/views/widgets/bottom_sheets/workspace_form.dart';
-import 'package:labor/views/widgets/cards/workspace_card.dart';
 import 'package:labor/views/widgets/cards/workspace_detailed_card.dart';
 import 'package:labor/views/widgets/custom_button.dart';
-import 'package:labor/views/widgets/workspace_tile.dart';
-import 'package:paginate_firestore_plus/paginate_firestore.dart';
 import 'package:paginate_firestore_plus/paginate_firestore.dart';
 
 class SettingScreen extends StatelessWidget {

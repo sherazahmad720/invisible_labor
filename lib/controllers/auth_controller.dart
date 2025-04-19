@@ -11,7 +11,7 @@ class AuthController extends GetxController {
   final Rx<User?> user = Rx<User?>(null);
   UserModel? userModel;
   WorkspaceModel? _selectedWorkSpace;
-  get selectedWorkSpace => _selectedWorkSpace;
+  WorkspaceModel? get selectedWorkSpace => _selectedWorkSpace;
   RxBool isLoading = false.obs;
   String? displayName;
 
@@ -50,13 +50,14 @@ class AuthController extends GetxController {
     } on FirebaseAuthException catch (e) {
       return e.message;
     } catch (e) {
+      isLoading.value = false;
       return 'An unexpected error occurred. Please try again.';
     }
   }
 
-  signup(String email, String password, {required displayName}) async {
+  signup(String email, String password, {required String displayName}) async {
     try {
-      this.displayName = displayName;
+      // this.displayName = displayName;
       await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
@@ -70,6 +71,7 @@ class AuthController extends GetxController {
     } on FirebaseAuthException catch (e) {
       return e.message;
     } catch (e) {
+      isLoading.value = false;
       return 'An unexpected error occurred. Please try again.';
     }
   }

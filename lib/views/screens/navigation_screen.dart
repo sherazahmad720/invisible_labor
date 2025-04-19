@@ -18,24 +18,24 @@ class NavigationScreen extends StatelessWidget {
             return Scaffold(
               body: controller.selectedPage,
               bottomNavigationBar:
-                  authController.selectedWorkSpace == null
-                      ? null
-                      : BottomNavigationBar(
-                        currentIndex: controller.selectedIndex,
-                        onTap: (val) {
-                          controller.selectIndex = val;
-                        },
-                        items:
-                            controller.navigationModelList
-                                .map(
-                                  (NavigationModel e) =>
-                                      BottomNavigationBarItem(
-                                        label: e.label,
-                                        icon: e.icon,
-                                      ),
-                                )
-                                .toList(),
-                      ),
+              authController.selectedWorkSpace == null
+                  ? null
+                  :
+              BottomNavigationBar(
+                currentIndex: controller.selectedIndex,
+                onTap: (val) {
+                  controller.selectIndex = val;
+                },
+                items:
+                    controller.navigationModelList
+                        .map(
+                          (NavigationModel e) => BottomNavigationBarItem(
+                            label: e.label,
+                            icon: e.icon,
+                          ),
+                        )
+                        .toList(),
+              ),
             );
           },
         );
