@@ -2,50 +2,57 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
-  final String id;
-  final String name;
-  final String phone;
+  final String? id;
+  final String? displayName;
+
   final String? photoUrl;
-  final String email;
-  final bool? isBlocked;
+  final String? email;
+  final DocumentReference? selectedWorkspaceRef;
+  final List<String>? friendsList;
+  final List<String>? workspaces;
+  final List<String>? groupLists;
+  final DateTime? creationDate;
+  final DocumentReference? ref;
 
   UserModel({
-    required this.id,
-    required this.name,
-    required this.phone,
+    this.id,
+    this.displayName,
     this.photoUrl,
-    required this.email,
-    this.isBlocked,
+    this.email,
+    this.friendsList,
+    this.groupLists,
+    this.ref,
+    this.selectedWorkspaceRef,
+    this.creationDate,
+    this.workspaces,
   });
   factory UserModel.fromDoc(DocumentSnapshot doc) {
     var data = doc.data() as Map<String, dynamic>;
     return UserModel(
-      id: doc.id, // Corrected from json.id to data['id']
-      name: data['name'],
-      phone: data['phone'],
+      id: doc.id,
+      displayName: data['displayName'],
       photoUrl: data['photoUrl'],
       email: data['email'],
-      isBlocked: data['isBlocked'] ?? false,
-    );
-  }
-
-  factory UserModel.fromMap(Map<String, dynamic> doc) {
-    return UserModel(
-      id: doc['id'],
-      name: doc['name'],
-      phone: doc['phone'],
-      photoUrl: doc['photoUrl'],
-      email: doc['email'],
+      friendsList: data['friendsList'],
+      creationDate: data['creationDate'].toDate(),
+      groupLists: data['groupLists'],
+      selectedWorkspaceRef: data['selectedWorkspaceRef'],
+      workspaces: data['workspaces'],
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'name': name,
-      'phone': phone,
+      'displayName': displayName,
+
       'photoUrl': photoUrl,
       'email': email,
+      'friendsList': friendsList,
+      'creationDate': FieldValue.serverTimestamp(),
+      'groupLists': groupLists,
+      'selectedWorkspaceRef': selectedWorkspaceRef,
+      'workspaces': workspaces,
     };
   }
 }

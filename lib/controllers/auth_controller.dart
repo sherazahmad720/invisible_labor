@@ -3,13 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:get/get.dart';
 import 'package:labor/models/user_model.dart';
+import 'package:labor/services/firebase_services.dart';
 import 'package:labor/views/screens/auth/login_screen.dart';
 import 'package:labor/views/screens/navigation_screen.dart';
 
 class AuthController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final Rx<User?> user = Rx<User?>(null);
-  UserModel? userModel;
+  UserModel? userDataModel;
 
   authListener() async {
     user.value = _auth.currentUser;
@@ -30,6 +31,7 @@ class AuthController extends GetxController {
   Future<String?> login(String email, String password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
+
       // await FirebaseMessaging.instance.subscribeToTopic(
       //   FirebaseAuth.instance.currentUser!.uid,
       // );
@@ -60,24 +62,48 @@ class AuthController extends GetxController {
     return _auth.currentUser?.email;
   }
 
+  String? getDisplayName() {
+    return _auth.currentUser?.displayName;
+  }
+
+  String? getPhotoUrl() {
+    return _auth.currentUser?.photoURL;
+  }
+
   Future<UserModel?> fetchUserModel() async {
     String? userId = getUserId();
     if (userId != null) {
-      DocumentSnapshot doc =
-          await FirebaseFirestore.instance
-              .collection('users')
-              .doc(userId)
-              .get();
-      if (doc.exists) {
-        userModel = UserModel.fromDoc(doc);
-        update();
-        return userModel!;
+      UserModel? userModel = await FirebaseServices.getUser(userId);
+      if (userModel == null) {
+        UserModel userModelTemp = UserModel(
+          id: userId,
+          email: getUserEmail(),
+          displayName: getDisplayName(),
+        );
       } else {
-        logout();
+        ;
       }
     } else {
       logout();
     }
     return null;
   }
+
+  Future<UserModel> saveUserData(String userId) async {
+    UserModel userModel = UserModel(
+      id: userId,
+      email: getUserEmail(),
+      displayName: getDisplayName(),
+      friendsList: [],
+      workspaces: [userId],
+      selectedWorkspaceRef: FirebaseServices.workspaceCollection.doc(userId),
+      groupLists: [],
+      photoUrl: getPhotoUrl() ?? '',
+      ref: FirebaseServices.userCollection.doc(userId),
+    );
+    await FirebaseServices.saveUser(userModel, userId);
+    return userModel;
+  }
+
+  Future<void> saveDefaultWorkSpace() async {}
 }
