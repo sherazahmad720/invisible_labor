@@ -54,6 +54,8 @@ class FirebaseServices {
     'members',
     arrayContains: FirebaseAuth.instance.currentUser?.uid ?? '-',
   );
+  static Query searchUser(String searchQuery) =>
+      userCollection.where('searchIndex', arrayContains: searchQuery);
 
   static Future<DocumentReference?> createTask(
     TaskModel taskModel, {

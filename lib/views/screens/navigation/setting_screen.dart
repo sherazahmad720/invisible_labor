@@ -7,6 +7,7 @@ import 'package:labor/services/firebase_services.dart';
 import 'package:labor/utils/app_helper.dart';
 import 'package:labor/utils/enum/button_type.dart';
 import 'package:labor/utils/extentions.dart';
+import 'package:labor/views/screens/workspace/workspace_details_screen.dart';
 import 'package:labor/views/widgets/bottom_sheets/workspace_form.dart';
 import 'package:labor/views/widgets/cards/workspace_detailed_card.dart';
 import 'package:labor/views/widgets/custom_button.dart';
@@ -55,17 +56,21 @@ class SettingScreen extends StatelessWidget {
                         radius: 30,
                         backgroundColor: context.theme.colorScheme.primary,
                         backgroundImage:
-                            authController.userModel?.photoUrl != null
+                            (authController.userModel?.photoUrl ?? '') != ''
                                 ? CachedNetworkImageProvider(
                                   authController.userModel!.photoUrl!,
                                 )
                                 : null,
                         child:
-                            authController.userModel?.photoUrl == null
-                                ? Icon(
-                                  Icons.person_2,
-                                  size: 50,
-                                  color: context.theme.colorScheme.onPrimary,
+                            (authController.userModel?.photoUrl ?? '') == ''
+                                ? Text(
+                                  (authController.userModel?.displayName ?? '')
+                                      .substring(0, 1),
+                                  style: context.textTheme.headlineLarge
+                                      ?.copyWith(
+                                        color:
+                                            context.theme.colorScheme.onPrimary,
+                                      ),
                                 )
                                 : null,
                       ),
@@ -125,6 +130,13 @@ class SettingScreen extends StatelessWidget {
                                   WorkspaceModel.fromDoc(docs[index]);
                               return WorkspaceDetailedCard(
                                 workspaceModel: workspaceModel,
+                                onTap: () {
+                                  Get.to(
+                                    () => WorkspaceDetailsScreen(
+                                      workspaceModel: workspaceModel,
+                                    ),
+                                  );
+                                },
                               );
                             },
                             shrinkWrap: true,
