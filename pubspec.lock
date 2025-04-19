@@ -17,6 +17,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.12.0"
+  bloc:
+    dependency: transitive
+    description:
+      name: bloc
+      sha256: "52c10575f4445c61dd9e0cafcc6356fdd827c4c64dd7945ef3c4105f6b6ac189"
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.0.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -198,14 +206,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_cache_manager:
+  flutter_bloc:
     dependency: transitive
     description:
-      name: flutter_cache_manager
-      sha256: "400b6592f16a4409a7f2bb929a9a7e38c72cceb8ffb99ee57bbf2cb2cecf8386"
+      name: flutter_bloc
+      sha256: "1046d719fbdf230330d3443187cc33cc11963d15c9089f6cc56faa42a4c5f0cc"
       url: "https://pub.dev"
     source: hosted
-    version: "3.4.1"
+    version: "9.1.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -336,14 +344,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.16.0"
-  octo_image:
+  nested:
     dependency: transitive
     description:
-      name: octo_image
-      sha256: "34faa6639a78c7e3cbe79be6f9f96535867e879748ade7d17c9b1ae7536293bd"
+      name: nested
+      sha256: "03bac4c528c64c95c722ec99280375a6f2fc708eec17c7b3f07253b626cd2a20"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
+    version: "1.0.0"
+  paginate_firestore_plus:
+    dependency: "direct main"
+    description:
+      name: paginate_firestore_plus
+      sha256: "2cb5c2f41fd95bf3d924b276d0df979ec402bed4f9ddcb33cf63c1819e3c2acb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2+3"
   path:
     dependency: transitive
     description:
@@ -416,14 +432,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
-  rxdart:
+  provider:
     dependency: transitive
     description:
-      name: rxdart
-      sha256: "5c3004a4a8dbb94bd4bf5412a4def4acdaa12e12f269737a5751369e12d1a962"
+      name: provider
+      sha256: "489024f942069c2920c844ee18bb3d467c69e48955a4f32d1677f71be103e310"
       url: "https://pub.dev"
     source: hosted
-    version: "0.28.0"
+    version: "6.1.4"
   shimmer:
     dependency: "direct main"
     description:

@@ -12,7 +12,8 @@ import 'package:labor/views/widgets/custom_button.dart';
 import 'package:labor/views/widgets/workspace_card.dart';
 
 class SettingScreen extends StatelessWidget {
-  const SettingScreen({super.key});
+  SettingScreen({super.key});
+  AuthController authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
