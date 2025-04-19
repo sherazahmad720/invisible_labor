@@ -32,7 +32,7 @@ class SettingScreen extends StatelessWidget {
                 fontWeight: FontWeight.w900,
               ),
             ),
-            10.horizontalSpace,
+            10.width,
             Icon(Icons.settings_outlined, color: context.iconColor),
           ],
         ),
@@ -60,7 +60,7 @@ class SettingScreen extends StatelessWidget {
                 (authController) => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    20.verticalSpace,
+                    20.height,
                     Row(
                       children: [
                         CircleAvatar(
@@ -81,7 +81,7 @@ class SettingScreen extends StatelessWidget {
                                   )
                                   : null,
                         ),
-                        20.horizontalSpace,
+                        20.width,
                         Expanded(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -101,9 +101,9 @@ class SettingScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    24.verticalSpace,
+                    24.height,
                     Text('Workspace'),
-                    10.verticalSpace,
+                    10.height,
                     StreamBuilder(
                       stream:
                           FirebaseServices.workspaceCollection
@@ -135,7 +135,7 @@ class SettingScreen extends StatelessWidget {
                         return SizedBox();
                       },
                     ),
-                    24.verticalSpace,
+                    24.height,
                     CustomButton(
                       buttonText: 'Logout',
                       onPressed: () => authController.logout(),
