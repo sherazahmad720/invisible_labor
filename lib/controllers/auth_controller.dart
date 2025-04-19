@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:labor/controllers/dashboard_controller.dart';
 import 'package:labor/models/user_model.dart';
 import 'package:labor/models/workspace_model.dart';
 import 'package:labor/services/firebase_services.dart';
@@ -19,6 +20,7 @@ class AuthController extends GetxController {
   set selectWorkSpace(WorkspaceModel model) {
     userModel?.ref?.update({'selectedWorkspace': model.ref});
     _selectedWorkSpace = model;
+    Get.put(DashboardController()).updateDashboard();
     update();
   }
 
