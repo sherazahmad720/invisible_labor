@@ -28,6 +28,10 @@ class FirebaseServices {
     userCollection.doc(userId).set(user.toMap());
   }
 
+  static Future<void> updateUser(String name, String userId) async {
+    userCollection.doc(userId).update({'displayName': name});
+  }
+
   static Future<WorkspaceModel?> getWorkspace(DocumentReference ref) async {
     DocumentSnapshot snapshot = await ref.get();
     if (snapshot.exists) {
@@ -80,7 +84,8 @@ class FirebaseServices {
   }
 
   Query myRecentTasksQuery(String workspaceId) {
-    return tasksCollection.where('workspaceId', isEqualTo: workspaceId);
-    // .orderBy('startTime');
+    return tasksCollection
+        .where('workspaceId', isEqualTo: workspaceId)
+        .orderBy('startTime');
   }
 }
