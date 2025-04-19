@@ -93,13 +93,18 @@ class _UserSearchFormState extends State<UserSearchForm> {
                     ),
           ),
           10.height,
-          Row(children: [
-            Expanded(child: CustomButton(buttonText: 'Cancel',Colors.red)),
-            10.width,
-            Expanded(child: child)
-          ],)
+          Row(
+            children: [
+              Expanded(
+                child: CustomButton(buttonText: 'Cancel', onPressed: () {}),
+              ),
+              10.width,
+              Expanded(
+                child: CustomButton(buttonText: 'Update', onPressed: () {}),
+              ),
+            ],
+          ),
           10.height,
-
         ],
       ),
     );
